@@ -14,16 +14,17 @@
 
 int is_spacee(int c)
 {
-    return (c == ' ' || c == '\t' || '\n');
+    return (c == ' ' || c == '\t' || c == '\n');
 }
 
 int handle_all_errors(t_shell *s)
 {
-    if (!handle_quotes(s->input))
+    if (!handle_quotes(s))
         return 0;
-    if (!handle_pipe(s->input))
+    if (!handle_pipes(s))
         return 0;
-    return 1;
+    if (!handle_redirections(s))
+        return 1;
 }
 
 int handle_pipes(t_shell *s)
@@ -32,7 +33,7 @@ int handle_pipes(t_shell *s)
 
     i = 0;
     while (is_spacee(s->input[i]))
-        i++:
+        i++;
     if (s->input[i] == '|')
         return 0;
     while (s->input[i])
@@ -62,11 +63,11 @@ int handle_quotes(t_shell *s)
     quote = 0;
     while (s->input[i])
     {
-        if ((s->input[i] == '\'' || s->input[i] == '\''))
+        if ((s->input[i] == '\'' || s->input[i] == '\"'))
         {
             if (!quote)
                 quote = s->input[i];
-            else if (qoute == s->input[i])
+            else if (quote == s->input[i])
                 quote = 0;
         }
         i++;
@@ -76,22 +77,38 @@ int handle_quotes(t_shell *s)
     return 1;
 }
 
-int main(int ac, char **av)
+int handle_redirections(t_shell *s)
 {
-    t_shell s;
-    (void)ac;
-    (void)av;
-    
-    while (1)
+    int i;
+    int redirections_num;
+    char c;
+
+    redirections_num = 0;
+    i = 0;
+    while (s->input[i])
     {
-        s.input = readline("minishell >");
-        if (!s.input)
-            break ;
-        if (!handle_quotes(s.input))
-            continue ;
-        add_history(s.input);
+        if (s->input[i] == '<' || s->input[i] == '>')
+        {
+            c = s->input[i];
+            while (s->input[i] == c)
+            {
+                redirections_num++;
+                i++;
+            }
+            if (redirections_num > 2)
+                return 0;
+            while (is_spacee(s->input[i]))
+                i++;
+            if (s->input[i] == '\0'
+				|| s->input[i] == '|'
+				|| s->input[i] == '<'
+				|| s->input[i] == '>')
+				return (0);
+        }
+        else
+            i++;
     }
-    return 0;
+    return 1;
 }
 
 void	clean_quotes(char *str)
@@ -112,4 +129,26 @@ void	clean_quotes(char *str)
 		}
 		i++;
 	}
+}
+
+int main(int ac, char **av)
+{
+    t_shell s;
+    (void)ac;
+    (void)av;
+    
+    while (1)
+    {
+        s.input = readline("minishell >");
+        if (!s.input)
+            break ;
+        if (!handle_all_errors(&s))
+        {
+            printf("minishell: syntax error\n");
+            free(s.input);
+            continue;
+        }
+        add_history(s.input);
+    }
+    return 0;
 }

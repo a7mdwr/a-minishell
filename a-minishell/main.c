@@ -12,6 +12,11 @@
 
 #include "minishell.h"
 
+int is_spacee(int c)
+{
+    return (c == ' ' || c == '\t' || '\n');
+}
+
 int handle_all_errors(t_shell *s)
 {
     if (!handle_quotes(s->input))
@@ -23,17 +28,27 @@ int handle_all_errors(t_shell *s)
 
 int handle_pipes(t_shell *s)
 {
-    int len;
     int i;
 
     i = 0;
-    len = ft_strlen(s->input);
-    if (!s->input)
+    while (is_spacee(s->input[i]))
+        i++:
+    if (s->input[i] == '|')
         return 0;
     while (s->input[i])
     {
-        if(s->input[0] == '\'' || s->input[len - 1])
+        if (s->input[i] == '|')
+        {
+            i++;
+            while (is_spacee(s->input[i]))
+                i++;
+            if (s->input[i] == '\0' || s->input[i] == '|')
+                return 0;
+        }
+        else 
+            i++;
     }
+    return 1;
 }
 
 int handle_quotes(t_shell *s)
@@ -51,9 +66,14 @@ int handle_quotes(t_shell *s)
         {
             if (!quote)
                 quote = s->input[i];
-            
+            else if (qoute == s->input[i])
+                quote = 0;
         }
+        i++;
     }
+    if (quote != 0)
+        return 0;
+    return 1;
 }
 
 int main(int ac, char **av)
@@ -73,10 +93,6 @@ int main(int ac, char **av)
     }
     return 0;
 }
-
-
-
-
 
 void	clean_quotes(char *str)
 {

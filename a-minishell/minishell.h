@@ -32,8 +32,9 @@ typedef struct s_shell
     char *input;
 } t_shell;
 
-int handle_quotes(char *input);
-int handle_all_errors(char *input);
-int handle_pipes(char *input);
+int handle_quotes(t_shell *s);
+int handle_all_errors(t_shell *s);
+int handle_pipes(t_shell *s);
+int is_spacee(int c);
 
 #endif

@@ -27,6 +27,16 @@
 #include <readline/readline.h>
 #include <readline/history.h>
 
+typedef enum e_token_type
+{
+    TOKEN_WORD,
+    TOKEN_PIPE,
+    TOKEN_REDIRECT_IN,   // <
+    TOKEN_REDIRECT_OUT,  // >
+    TOKEN_REDIRECT_APPEND, // >>
+    TOKEN_HEREDOC        // <<
+} t_token_type;
+
 typedef struct s_shell
 {
     char *input;
@@ -35,6 +45,7 @@ typedef struct s_shell
 int handle_quotes(t_shell *s);
 int handle_all_errors(t_shell *s);
 int handle_pipes(t_shell *s);
+int handle_redirections(t_shell *s);
 int is_spacee(int c);
 
 #endif

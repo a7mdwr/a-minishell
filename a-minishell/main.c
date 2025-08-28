@@ -24,7 +24,8 @@ int handle_all_errors(t_shell *s)
     if (!handle_pipes(s))
         return 0;
     if (!handle_redirections(s))
-        return 1;
+        return 0;
+    return 1;
 }
 
 int handle_pipes(t_shell *s)
@@ -90,6 +91,7 @@ int handle_redirections(t_shell *s)
         if (s->input[i] == '<' || s->input[i] == '>')
         {
             c = s->input[i];
+            redirections_num = 0;
             while (s->input[i] == c)
             {
                 redirections_num++;

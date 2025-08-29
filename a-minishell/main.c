@@ -17,34 +17,39 @@ int is_spacee(int c)
     return (c == ' ' || c == '\t' || c == '\n');
 }
 
-int handle_all_errors(t_shell *s)
+int in_quotes(char *str)
 {
-    if (!handle_quotes(s))
+    
+}
+
+int handle_all_errors(char *input)
+{
+    if (!handle_quotes(input))
         return 0;
-    if (!handle_pipes(s))
+    if (!handle_pipes(input))
         return 0;
-    if (!handle_redirections(s))
+    if (!handle_redirections(input))
         return 0;
     return 1;
 }
 
-int handle_pipes(t_shell *s)
+int handle_pipes(char *input)
 {
     int i;
 
     i = 0;
-    while (is_spacee(s->input[i]))
+    while (is_spacee(input[i]))
         i++;
-    if (s->input[i] == '|')
+    if (input[i] == '|')
         return 0;
-    while (s->input[i])
+    while (input[i])
     {
-        if (s->input[i] == '|')
+        if (input[i] == '|')
         {
             i++;
-            while (is_spacee(s->input[i]))
+            while (is_spacee(input[i]))
                 i++;
-            if (s->input[i] == '\0' || s->input[i] == '|')
+            if (input[i] == '\0' || input[i] == '|')
                 return 0;
         }
         else 
@@ -53,22 +58,22 @@ int handle_pipes(t_shell *s)
     return 1;
 }
 
-int handle_quotes(t_shell *s)
+int handle_quotes(char *input)
 {
     int i;
     int quote;
     
-    if (!s->input)
+    if (!input)
         return 0;
     i = 0;
     quote = 0;
-    while (s->input[i])
+    while (input[i])
     {
-        if ((s->input[i] == '\'' || s->input[i] == '\"'))
+        if ((input[i] == '\'' || input[i] == '\"'))
         {
             if (!quote)
-                quote = s->input[i];
-            else if (quote == s->input[i])
+                quote = input[i];
+            else if (quote == input[i])
                 quote = 0;
         }
         i++;
@@ -78,7 +83,7 @@ int handle_quotes(t_shell *s)
     return 1;
 }
 
-int handle_redirections(t_shell *s)
+int handle_redirections(char *input)
 {
     int i;
     int redirections_num;
@@ -86,25 +91,25 @@ int handle_redirections(t_shell *s)
 
     redirections_num = 0;
     i = 0;
-    while (s->input[i])
+    while (input[i])
     {
-        if (s->input[i] == '<' || s->input[i] == '>')
+        if (input[i] == '<' || input[i] == '>')
         {
-            c = s->input[i];
+            c = input[i];
             redirections_num = 0;
-            while (s->input[i] == c)
+            while (input[i] == c)
             {
                 redirections_num++;
                 i++;
             }
             if (redirections_num > 2)
                 return 0;
-            while (is_spacee(s->input[i]))
+            while (is_spacee(input[i]))
                 i++;
-            if (s->input[i] == '\0'
-				|| s->input[i] == '|'
-				|| s->input[i] == '<'
-				|| s->input[i] == '>')
+            if (input[i] == '\0'
+				|| input[i] == '|'
+				|| input[i] == '<'
+				|| input[i] == '>')
 				return (0);
         }
         else
@@ -113,44 +118,43 @@ int handle_redirections(t_shell *s)
     return 1;
 }
 
-void	clean_quotes(char *str)
-{
-	int	i;
-	int	quote;
+// void	clean_quotes(char *inputtr)
+// {
+// 	int	i;
+// 	int	quote;
 
-	i = 0;
-	quote = 0;
-	while (str[i])
-	{
-		if (str[i] == '\'' || str[i] == '\"')
-		{
-			if (!quote)
-				quote = str[i];
-			else if (quote == str[i])
-				quote = 0;
-		}
-		i++;
-	}
-}
+// 	i = 0;
+// 	quote = 0;
+// 	while (str[i])
+// 	{
+// 		if (str[i] == '\'' || str[i] == '\"')
+// 		{
+// 			if (!quote)
+// 				quote = str[i];
+// 			else if (quote == str[i])
+// 				quote = 0;
+// 		}
+// 		i++;
+// 	}
+// }
 
 int main(int ac, char **av)
 {
-    t_shell s;
+    char *input;
     (void)ac;
     (void)av;
     
     while (1)
     {
-        s.input = readline("minishell >");
-        if (!s.input)
+        input = readline("minishell >");
+        if (!input)
             break ;
-        if (!handle_all_errors(&s))
+        add_history(input);
+        if (!handle_all_errors(input))
         {
             printf("minishell: syntax error\n");
-            free(s.input);
             continue;
         }
-        add_history(s.input);
     }
     return 0;
 }

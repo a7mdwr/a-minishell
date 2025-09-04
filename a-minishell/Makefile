@@ -1,5 +1,5 @@
 NAME = minishell
-SRCS =	main.c
+SRCS =	main.c signals.c env.c
 OBJS = $(SRCS:.c=.o)
 CC = cc
 

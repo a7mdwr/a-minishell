@@ -23,25 +23,26 @@
 # include <limits.h>
 # include <stdlib.h> 
 # include <stdbool.h>
+# include <signal.h>
 # include <errno.h>
 #include <readline/readline.h>
 #include <readline/history.h>
 //                                  echo "hi" "hello" "sjanjan" >          file1 > file2 "mmmm"
-typedef enum e_token_type
-{
-    TOKEN_WORD,
-    TOKEN_PIPE,
-    TOKEN_REDIRECT_IN,   // <
-    TOKEN_REDIRECT_OUT,  // >
-    TOKEN_REDIRECT_APPEND, // >>
-    TOKEN_HEREDOC        // <<
-} t_token_type;
+// typedef enum e_token_type
+// {
+//     TOKEN_WORD,
+//     TOKEN_PIPE,
+//     TOKEN_REDIRECT_IN,   // <
+//     TOKEN_REDIRECT_OUT,  // >
+//     TOKEN_REDIRECT_APPEND, // >>
+//     TOKEN_HEREDOC        // <<
+// } t_token_type;
 
-struct s_redirect
-{
-    char *filename;
-    int token;
-}   t_redirect;
+// struct s_redirect
+// {
+//     char *filename;
+//     int token;
+// }   t_redirect;
 
 
 // struct s_cmds
@@ -61,11 +62,13 @@ typedef struct s_shell
     // t_cmds *cmd;
 } t_shell;
 
-int handle_quotes(char *input);
-int handle_all_errors(char *input);
-int handle_pipes(char *input);
-int handle_redirections(char *input);
-int is_spacee(int c);
+int     handle_quotes(char *input);
+int     handle_all_errors(char *input);
+int     handle_pipes(char *input);
+int     handle_redirections(char *input);
+int     is_spacee(int c);
 void    copy_env(t_shell *s, char **env);
+void	handle_signals(int signal);
+int     in_quotes(char *str, int index);
 
 #endif

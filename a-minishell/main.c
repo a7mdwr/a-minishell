@@ -17,9 +17,23 @@ int is_spacee(int c)
     return (c == ' ' || c == '\t' || c == '\n');
 }
 
-int in_quotes(char *str)
+int in_quotes(char *str, int index)
 {
-    
+    int i;
+    char quote;
+
+    i = 0;
+    while (i < index && str[i])
+    {
+        if (str[i] == '\'' || str[i] == '\"')
+            quote = str[i];
+        else if (quote == str[i])
+            quote = 0;
+    }
+    if (quote != 0)
+        return 1;
+    else
+        return 0;
 }
 
 int handle_all_errors(char *input)
@@ -44,7 +58,7 @@ int handle_pipes(char *input)
         return 0;
     while (input[i])
     {
-        if (input[i] == '|')
+        if (input[i] == '|' && !in_quotes(input, i))
         {
             i++;
             while (is_spacee(input[i]))
@@ -93,7 +107,7 @@ int handle_redirections(char *input)
     i = 0;
     while (input[i])
     {
-        if (input[i] == '<' || input[i] == '>')
+        if (input[i] == '<' || input[i] == '>' && !in_quotes(input, i))
         {
             c = input[i];
             redirections_num = 0;
@@ -138,12 +152,14 @@ int handle_redirections(char *input)
 // 	}
 // }
 
-int main(int ac, char **av)
+int main(int ac, char **av, char **env)
 {
     char *input;
-    (void)ac;
+    t_shell *s;
     (void)av;
-    
+    if (ac != 1)
+        return (0);
+    copy_env(&s, env);
     while (1)
     {
         input = readline("minishell >");

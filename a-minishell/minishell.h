@@ -37,11 +37,11 @@ typedef enum e_token_type
     TOKEN_HEREDOC        // <<
 } t_token_type;
 
-// struct s_red
-// {
-//     char *filename;
-//     int token;
-// }   t_red;
+struct s_redirect
+{
+    char *filename;
+    int token;
+}   t_redirect;
 
 
 // struct s_cmds
@@ -54,8 +54,10 @@ typedef enum e_token_type
 
 typedef struct s_shell
 {
-    char *input;
-    int num_cmd;
+    char    *input;
+    int     num_cmd;
+    t_list  *environment;
+    int environment_num;
     // t_cmds *cmd;
 } t_shell;
 
@@ -64,5 +66,6 @@ int handle_all_errors(char *input);
 int handle_pipes(char *input);
 int handle_redirections(char *input);
 int is_spacee(int c);
+void    copy_env(t_shell *s, char **env);
 
 #endif

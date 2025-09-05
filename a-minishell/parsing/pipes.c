@@ -6,7 +6,7 @@
 /*   By: aradwan <aradwan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/05 13:13:19 by aradwan           #+#    #+#             */
-/*   Updated: 2025/09/05 13:42:12 by aradwan          ###   ########.fr       */
+/*   Updated: 2025/09/05 16:22:35 by aradwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,6 @@ static int	check_input(char *input)
 		return (0);
 	return (1);
 }
-
 
 int	handle_pipes(t_shell *pipe, char *input, t_cmds *cmds)
 {

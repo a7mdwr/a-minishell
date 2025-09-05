@@ -6,7 +6,7 @@
 /*   By: aradwan <aradwan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/04 18:25:01 by aradwan           #+#    #+#             */
-/*   Updated: 2025/09/05 12:12:43 by aradwan          ###   ########.fr       */
+/*   Updated: 2025/09/05 16:11:19 by aradwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,18 +16,19 @@ int main(int ac, char **av, char **env)
 {
     char *input;
     t_shell s;
+    t_cmds cmd;
     (void)av;
     if (ac != 1)
         return (0);
     copy_env(&s, env);
     while (1)
     {
-        signal(SIGINT, handle_signals);
-        signal(SIGQUIT, SIG_IGN);
+        // signal(SIGINT, handle_signals);
+        // signal(SIGQUIT, SIG_IGN);
         input = readline("minishell> ");
         if (!input)
             return (printf("exit\n"), 0);
-        if (parsing(input))
+        if (parsing(&s, &cmd, input))
             continue;
         add_history(input);
     }

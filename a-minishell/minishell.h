@@ -76,6 +76,11 @@ typedef struct s_shell
     char    **cmds;
 } t_shell;
 
+
+int	parsing(t_shell *pipe, t_cmds *cmds, char *input);
+void    copy_env(t_shell *s, char **env);
+char	*ft_add_spaces(char *input);
+void	replace_spaces_tabs(char *str);
 //            utils.c            \\.
 int     spaces(char *str);
 int     is_spacee(int c);

@@ -6,7 +6,7 @@
 /*   By: aradwan <aradwan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/05 17:23:19 by aradwan           #+#    #+#             */
-/*   Updated: 2025/09/05 17:24:16 by aradwan          ###   ########.fr       */
+/*   Updated: 2025/09/05 20:10:47 by aradwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,8 +105,6 @@ void	generate_strings_helper(char **str, char *expanded, t_variables *var)
 
 int	generate_string(char **str, char **tmp, t_variables *var, t_shell *pipe)
 {
-	// char	*joined;
-	// char	*joined2;
 	char	*expanded;
 
 	expanded = NULL;
@@ -116,20 +114,6 @@ int	generate_string(char **str, char **tmp, t_variables *var, t_shell *pipe)
 		if (expanded)
 		{
 			generate_strings_helper(str, expanded, var);
-			// if (!var->in_d_quotes)
-			// {
-			// 	joined = ft_strjoin(expanded, "\"");
-			// 	joined2 = ft_strjoin("\"", joined);
-			// 	*str = storing(*str, var->i - var->len - 1, var->len + 1, joined2);
-			// 	var->i += ft_strlen(expanded) - var->len - 1;
-			// 	free(joined2);
-			// 	free(joined);
-			// }
-			// else
-			// {
-			// 	*str = storing(*str, var->i - var->len - 1, var->len + 1, expanded);
-			// 	var->i += ft_strlen(expanded) - var->len - 1;
-			// }
 		}
 		else if (!expanded)
 		{

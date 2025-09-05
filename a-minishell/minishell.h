@@ -27,8 +27,9 @@
 # include <errno.h>
 #include <readline/readline.h>
 #include <readline/history.h>
-//                                  echo "hi" "hello" "sjanjan" >          file1 > file2 "mmmm"
+
 extern int exit_code;
+
 enum e_types
 {
 	IN_FILE,

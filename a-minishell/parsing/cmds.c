@@ -6,7 +6,7 @@
 /*   By: aradwan <aradwan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/05 17:36:21 by aradwan           #+#    #+#             */
-/*   Updated: 2025/09/05 17:41:54 by aradwan          ###   ########.fr       */
+/*   Updated: 2025/09/05 20:07:54 by aradwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,6 @@ void	utils_saving(t_shell *pipe, t_cmds *cmds, t_variables *v)
 			clean_quotes(cmds[v->j].outs[v->xy].file_name);
 			remove_substr(pipe->cmds[v->j], v->start, v->i);
 			v->x = v->start - 1;
-			// printf("file name : %s\n", pipe->cmds[v->j]);
 			printf("file name : %s\n", cmds[v->j].outs[v->xy].file_name);
 			printf("flag	  : %d\n", cmds[v->j].outs[v->xy].flag);
 			v->xy++;
@@ -102,7 +101,7 @@ void	files_saving(t_shell *pipe, t_cmds **tmp)
 	var.x = 0;
 	*tmp = malloc(sizeof(t_cmds) * pipe->cmd_len);
 	cmds = *tmp;
-	cmds->red_len = 0; //     echo hi > 'file1   khk' < file2 | cat -e | ls -la
+	cmds->red_len = 0;
 	while (++var.j < pipe->cmd_len)
 	{
 		cmds[var.j].red_len = num_of_redirects(pipe->cmds[var.j]);

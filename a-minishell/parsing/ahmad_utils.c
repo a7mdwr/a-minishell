@@ -6,7 +6,7 @@
 /*   By: aradwan <aradwan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/05 12:08:42 by aradwan           #+#    #+#             */
-/*   Updated: 2025/09/05 17:47:41 by aradwan          ###   ########.fr       */
+/*   Updated: 2025/09/05 20:07:23 by aradwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,15 +133,9 @@ int	num_of_redirects(char *str)
 
 void	remove_substr(char *s, unsigned int start, size_t len)
 {
-	// printf("start :%d\n", start);
-	// printf("len :%zu\n", len);
 	size_t	i;
 	size_t	j;
-	// /char *str;
 
-	// str = malloc(sizeof(char) * (ft_strlen(s) - (len - start)) + 2);
-	// if (!str || !s)
-	//     return (NULL);
 	i = 0;
 	j = 0;
 	while (s[i])
@@ -154,6 +148,4 @@ void	remove_substr(char *s, unsigned int start, size_t len)
 		i++;
 	}
 	s[j] = '\0';
-	// free(s);
-	// return (str);
 }

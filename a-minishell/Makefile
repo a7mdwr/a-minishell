@@ -4,7 +4,7 @@ SRCS =	minishell.c parsing/signals.c  parsing/ahmad_utils.c  parsing/parser.c pa
 OBJS = $(SRCS:.c=.o)
 CC = cc
 
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -g
 
 all : $(NAME)
 

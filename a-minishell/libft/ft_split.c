@@ -83,7 +83,8 @@ char	**ft_split(char const *s, char c)
 	int		j;
 	int		count;
 	char	**split;
- 
+
+	if (!s)
 		return (NULL);
 	count = ft_worddet(s, c);
 	split = malloc(sizeof(char *) * (count + 1));

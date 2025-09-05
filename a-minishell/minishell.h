@@ -28,47 +28,66 @@
 #include <readline/readline.h>
 #include <readline/history.h>
 //                                  echo "hi" "hello" "sjanjan" >          file1 > file2 "mmmm"
-// typedef enum e_token_type
-// {
-//     TOKEN_WORD,
-//     TOKEN_PIPE,
-//     TOKEN_REDIRECT_IN,   // <
-//     TOKEN_REDIRECT_OUT,  // >
-//     TOKEN_REDIRECT_APPEND, // >>
-//     TOKEN_HEREDOC        // <<
-// } t_token_type;
+extern int exit_code;
+enum e_types
+{
+	IN_FILE,
+	OUT_FILE,
+	APPEND,
+	HERE_DOC,
+};
 
-// struct s_redirect
-// {
-//     char *filename;
-//     int token;
-// }   t_redirect;
+typedef struct s_redirect
+{
+	int		flag;
+	char	*file_name;
+}	t_redirect;
 
+typedef struct s_cmds
+{
+	int			red_len;
+	int			cmd_len;
+	char		**cmds;
+	t_redirect	*outs;
+}	t_cmds;
 
-// struct s_cmds
-// {
-//     char **args;
-//     t_redirection *redirect;
-//     int nun_of_redirect;
-// } t_cmds;
-
+typedef struct s_varibles
+{
+    int	i;
+	int	j;
+	int	h;
+	int	empty;
+	int	space_found;
+	int	quote_char;
+	int	x;
+	int	start;
+	int	len;
+	int	xy;
+	int	in_d_quotes;
+	int	in_quotes;
+} t_variables;
 
 typedef struct s_shell
 {
-    char    *input;
+    int     cmd_len;
     int     num_cmd;
     t_list  *environment;
-    int environment_num;
-    // t_cmds *cmd;
+    int     environment_num;
+    char    **cmds;
 } t_shell;
 
-int     handle_quotes(char *input);
-int     handle_all_errors(char *input);
-int     handle_pipes(char *input);
-int     handle_redirections(char *input);
+//            utils.c            \\.
+int     spaces(char *str);
 int     is_spacee(int c);
-void    copy_env(t_shell *s, char **env);
-void	handle_signals(int signal);
-int     in_quotes(char *str, int index);
+
+//            signals            \\.
+void    handle_signals(int signal);
+
+//            redirect           \\.
+int     redirections_parse(char *str);
+
+//             pipes             \\.
+int	    handle_pipes(t_shell *pipe, char *input, t_cmds *cmds);
+
 
 #endif

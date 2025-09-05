@@ -6,7 +6,7 @@
 /*   By: aradwan <aradwan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/04 18:25:01 by aradwan           #+#    #+#             */
-/*   Updated: 2025/09/05 16:11:19 by aradwan          ###   ########.fr       */
+/*   Updated: 2025/09/05 17:53:02 by aradwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int main(int ac, char **av, char **env)
 {
     char *input;
     t_shell s;
-    t_cmds cmd;
+    t_cmds *cmd;
     (void)av;
     if (ac != 1)
         return (0);
@@ -28,8 +28,10 @@ int main(int ac, char **av, char **env)
         input = readline("minishell> ");
         if (!input)
             return (printf("exit\n"), 0);
-        if (parsing(&s, &cmd, input))
+        if (parsing(&s, cmd, input))
             continue;
+        files_saving(&s, &cmd);
+		free_all(&s, cmd);
         add_history(input);
     }
     return (0);

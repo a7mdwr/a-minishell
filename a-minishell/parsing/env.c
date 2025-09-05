@@ -14,3 +14,27 @@ void    copy_env(t_shell *s, char **env)
     }
     s->environment_num = i;
 }
+
+char	*my_getenv(const char *name, t_shell *pipe)
+{
+	char	*value;
+	size_t	name_len;
+	t_list	*env;
+	char	*key;
+
+	value = NULL;
+	name_len = ft_strlen(name);
+	env = pipe->environment;
+	while (env != NULL)
+	{
+		key = (char *) env->content;
+		if (strncmp(key, name, name_len) == 0 && key[name_len] == '=')
+		{
+			value = key + name_len + 1;
+			break ;
+		}
+		env = env->next;
+	}
+	return (value);
+}
+

@@ -76,11 +76,17 @@ typedef struct s_shell
     char    **cmds;
 } t_shell;
 
-
-int	parsing(t_shell *pipe, t_cmds *cmds, char *input);
+void	files_saving(t_shell *pipe, t_cmds **tmp);
+int		parsing(t_shell *pipe, t_cmds *cmds, char *input);
 void    copy_env(t_shell *s, char **env);
 char	*ft_add_spaces(char *input);
 void	replace_spaces_tabs(char *str);
+char	*my_getenv(const char *name, t_shell *pipe);
+void	clean_quotes(char *str);
+int		num_of_redirects(char *str);
+void	remove_substr(char *s, unsigned int start, size_t len);
+void	free_all(t_shell *pipe, t_cmds *cmd);
+void	free_strings(char **av);
 //            utils.c            \\.
 int     spaces(char *str);
 int     is_spacee(int c);

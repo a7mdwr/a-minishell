@@ -6,7 +6,7 @@
 /*   By: aradwan <aradwan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/05 12:08:42 by aradwan           #+#    #+#             */
-/*   Updated: 2025/09/05 20:07:23 by aradwan          ###   ########.fr       */
+/*   Updated: 2025/09/06 14:22:36 by aradwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,49 +30,49 @@ int is_spacee(int c)
 }
 
 
-static void	increment(char *str, t_variables *vars)
+static void	increment(char *str, t_variables *v)
 {
-	if (str[vars->i] == ' ')
+	if (str[v->i] == ' ')
 	{
-		if (!vars->space_found)
+		if (!v->space_found)
 		{
-			str[vars->j++] = ' ';
-			vars->space_found = 1;
+			str[v->indx++] = ' ';
+			v->space_found = 1;
 		}
 	}
 	else
 	{
-		str[vars->j++] = str[vars->i];
-		vars->space_found = 0;
+		str[v->indx++] = str[v->i];
+		v->space_found = 0;
 	}
 }
 
 void	replace_spaces_tabs(char *str)
 {
-	t_variables	vars;
+	t_variables	v;
 
-	vars.i = 0;
-	vars.j = 0;
-	vars.space_found = 0;
-	vars.quote_char = 0;
-	while (str[vars.i] != '\0')
+	v.i = 0;
+	v.indx = 0;
+	v.space_found = 0;
+	v.quote_char = 0;
+	while (str[v.i] != '\0')
 	{
-		if (str[vars.i] == '"' || str[vars.i] == '\'')
+		if (str[v.i] == '"' || str[v.i] == '\'')
 		{
-			if (vars.quote_char == 0)
-				vars.quote_char = str[vars.i];
-			else if (vars.quote_char == str[vars.i])
-				vars.quote_char = 0;
-			vars.space_found = 0;
-			str[vars.j++] = str[vars.i];
+			if (v.quote_char == 0)
+				v.quote_char = str[v.i];
+			else if (v.quote_char == str[v.i])
+				v.quote_char = 0;
+			v.space_found = 0;
+			str[v.indx++] = str[v.i];
 		}
-		else if (vars.quote_char == 0)
-			increment(str, &vars);
+		else if (v.quote_char == 0)
+			increment(str, &v);
 		else
-			str[vars.j++] = str[vars.i];
-		vars.i++;
+			str[v.indx++] = str[v.i];
+		v.i++;
 	}
-	str[vars.j] = '\0';
+	str[v.indx] = '\0';
 }
 
 void	clean_quotes(char *str)

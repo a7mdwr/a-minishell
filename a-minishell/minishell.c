@@ -6,7 +6,7 @@
 /*   By: aradwan <aradwan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/04 18:25:01 by aradwan           #+#    #+#             */
-/*   Updated: 2025/09/05 17:53:02 by aradwan          ###   ########.fr       */
+/*   Updated: 2025/09/06 13:07:40 by aradwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int main(int ac, char **av, char **env)
             return (printf("exit\n"), 0);
         if (parsing(&s, cmd, input))
             continue;
-        files_saving(&s, &cmd);
+        init_commands(&s, &cmd);
 		free_all(&s, cmd);
         add_history(input);
     }

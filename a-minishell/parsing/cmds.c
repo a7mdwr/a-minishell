@@ -6,7 +6,7 @@
 /*   By: aradwan <aradwan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/05 17:36:21 by aradwan           #+#    #+#             */
-/*   Updated: 2025/09/05 20:07:54 by aradwan          ###   ########.fr       */
+/*   Updated: 2025/09/06 14:12:12 by aradwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,82 +38,82 @@ void	store_the_file_name(char *str, char **file_name, int i, t_variables *var)
 
 void	files_fillings(t_shell *pipe, t_cmds *cmds, t_variables *var)
 {
-	var->start = var->x - 1;
-	if (pipe->cmds[var->j][var->x + 1] == '>' \
-		|| pipe->cmds[var->j][var->x + 1] == '<')
+	var->start = var->char_i - 1;
+	if (pipe->cmds[var->cmd_i][var->char_i + 1] == '>' \
+		|| pipe->cmds[var->cmd_i][var->char_i + 1] == '<')
 	{
-		if (pipe->cmds[var->j][var->x + 1] == '>')
-			cmds[var->j].outs[var->xy].flag = APPEND;
-		else if (pipe->cmds[var->j][var->x + 1] == '<')
-			cmds[var->j].outs[var->xy].flag = HERE_DOC;
-		var->x = var->x + 2;
+		if (pipe->cmds[var->cmd_i][var->char_i + 1] == '>')
+			cmds[var->cmd_i].outs[var->xy].flag = APPEND;
+		else if (pipe->cmds[var->cmd_i][var->char_i + 1] == '<')
+			cmds[var->cmd_i].outs[var->xy].flag = HERE_DOC;
+		var->char_i = var->char_i + 2;
 	}
-	else if (pipe->cmds[var->j][var->x] == '>')
+	else if (pipe->cmds[var->cmd_i][var->char_i] == '>')
 	{
-		cmds[var->j].outs[var->xy].flag = OUT_FILE;
-		var->x++;
+		cmds[var->cmd_i].outs[var->xy].flag = OUT_FILE;
+		var->char_i++;
 	}
-	else if (pipe->cmds[var->j][var->x] == '<')
+	else if (pipe->cmds[var->cmd_i][var->char_i] == '<')
 	{
-		cmds[var->j].outs[var->xy].flag = IN_FILE;
-		var->x++;
+		cmds[var->cmd_i].outs[var->xy].flag = IN_FILE;
+		var->char_i++;
 	}
 }
 
 void	utils_saving(t_shell *pipe, t_cmds *cmds, t_variables *v)
 {
 	v->xy = 0;
-	v->x = -1;
-	while (pipe->cmds[v->j][++v->x])
+	v->char_i = -1;
+	while (pipe->cmds[v->cmd_i][++v->char_i])
 	{
-		if (pipe->cmds[v->j][v->x] == '"' || pipe->cmds[v->j][v->x] == '\'')
+		if (pipe->cmds[v->cmd_i][v->char_i] == '"' || pipe->cmds[v->cmd_i][v->char_i] == '\'')
 		{
 			if (v->quote_char == 0)
-				v->quote_char = pipe->cmds[v->j][v->x];
-			else if (v->quote_char == pipe->cmds[v->j][v->x])
+				v->quote_char = pipe->cmds[v->cmd_i][v->char_i];
+			else if (v->quote_char == pipe->cmds[v->cmd_i][v->char_i])
 				v->quote_char = 0;
 		}
-		if ((pipe->cmds[v->j][v->x] == '>' || \
-			pipe->cmds[v->j][v->x] == '<') && !v->quote_char)
+		if ((pipe->cmds[v->cmd_i][v->char_i] == '>' || \
+			pipe->cmds[v->cmd_i][v->char_i] == '<') && !v->quote_char)
 		{
 			files_fillings(pipe, cmds, v);
-			store_the_file_name(pipe->cmds[v->j], \
-				&cmds[v->j].outs[v->xy].file_name, v->x + 1, v);
-			clean_quotes(cmds[v->j].outs[v->xy].file_name);
-			remove_substr(pipe->cmds[v->j], v->start, v->i);
-			v->x = v->start - 1;
-			printf("file name : %s\n", cmds[v->j].outs[v->xy].file_name);
-			printf("flag	  : %d\n", cmds[v->j].outs[v->xy].flag);
+			store_the_file_name(pipe->cmds[v->cmd_i], \
+				&cmds[v->cmd_i].outs[v->xy].file_name, v->char_i + 1, v);
+			clean_quotes(cmds[v->cmd_i].outs[v->xy].file_name);
+			remove_substr(pipe->cmds[v->cmd_i], v->start, v->i);
+			v->char_i = v->start - 1;
+			printf("file name : %s\n", cmds[v->cmd_i].outs[v->xy].file_name);
+			printf("flag	  : %d\n", cmds[v->cmd_i].outs[v->xy].flag);
 			v->xy++;
 		}
 	}
 }
 
-void	files_saving(t_shell *pipe, t_cmds **tmp)
+void	init_commands(t_shell *pipe, t_cmds **tmp)
 {
 	t_cmds	*cmds;
-	t_variables	var;
+	t_variables	v;
 
-	var.start = 0;
-	var.quote_char = 0;
-	var.h = 0;
-	var.j = -1;
-	var.x = 0;
+	v.start = 0;
+	v.quote_char = 0;
+	v.arg_i = 0;
+	v.cmd_i = -1;
+	v.char_i = 0;
 	*tmp = malloc(sizeof(t_cmds) * pipe->cmd_len);
 	cmds = *tmp;
 	cmds->red_len = 0;
-	while (++var.j < pipe->cmd_len)
+	while (++v.cmd_i < pipe->cmd_len)
 	{
-		cmds[var.j].red_len = num_of_redirects(pipe->cmds[var.j]);
-		if (cmds[var.j].red_len)
-			cmds[var.j].outs = malloc(sizeof(t_redirect) * cmds[var.j].red_len);
-		utils_saving(pipe, cmds, &var);
-		cmds[var.j].cmds = ft_split(pipe->cmds[var.j], ' ');
-		var.h = 0;
-		while (cmds[var.j].cmds[var.h])
-			clean_quotes(cmds[var.j].cmds[var.h++]);
-		var.h = 0;
-		while (cmds[var.j].cmds[var.h])
-			puts(cmds[var.j].cmds[var.h++]);
+		cmds[v.cmd_i].red_len = num_of_redirects(pipe->cmds[v.cmd_i]);
+		if (cmds[v.cmd_i].red_len)
+			cmds[v.cmd_i].outs = malloc(sizeof(t_redirect) * cmds[v.cmd_i].red_len);
+		utils_saving(pipe, cmds, &v);
+		cmds[v.cmd_i].cmds = ft_split(pipe->cmds[v.cmd_i], ' ');
+		v.arg_i = 0;
+		while (cmds[v.cmd_i].cmds[v.arg_i])
+			clean_quotes(cmds[v.cmd_i].cmds[v.arg_i++]);
+		v.arg_i = 0;
+		while (cmds[v.cmd_i].cmds[v.arg_i])
+			puts(cmds[v.cmd_i].cmds[v.arg_i++]);
 	}
 }

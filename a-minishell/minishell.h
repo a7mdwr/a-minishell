@@ -55,12 +55,13 @@ typedef struct s_cmds
 typedef struct s_varibles
 {
     int	i;
-	int	j;
-	int	h;
+	int indx;
+	int	cmd_i;
+	int	arg_i;
 	int	empty;
 	int	space_found;
 	int	quote_char;
-	int	x;
+	int	char_i;
 	int	start;
 	int	len;
 	int	xy;
@@ -77,7 +78,7 @@ typedef struct s_shell
     char    **cmds;
 } t_shell;
 
-void	files_saving(t_shell *pipe, t_cmds **tmp);
+void	init_commands(t_shell *pipe, t_cmds **tmp);
 int		parsing(t_shell *pipe, t_cmds *cmds, char *input);
 void    copy_env(t_shell *s, char **env);
 char	*ft_add_spaces(char *input);
@@ -100,6 +101,5 @@ int     redirections_parse(char *str);
 
 //             pipes             \\.
 int	    handle_pipes(t_shell *pipe, char *input, t_cmds *cmds);
-
 
 #endif

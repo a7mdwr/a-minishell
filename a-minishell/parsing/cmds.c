@@ -6,7 +6,7 @@
 /*   By: aradwan <aradwan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/05 17:36:21 by aradwan           #+#    #+#             */
-/*   Updated: 2025/09/06 15:51:05 by aradwan          ###   ########.fr       */
+/*   Updated: 2025/09/07 19:08:10 by aradwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,8 +82,6 @@ void	utils_saving(t_shell *pipe, t_cmds *cmds, t_variables *v)
 			clean_quotes(cmds[v->cmd_i].outs[v->xy].file_name);
 			remove_substr(pipe->cmds[v->cmd_i], v->start, v->i);
 			v->char_i = v->start - 1;
-			printf("file name : %s\n", cmds[v->cmd_i].outs[v->xy].file_name);
-			printf("flag	  : %d\n", cmds[v->cmd_i].outs[v->xy].flag);
 			v->xy++;
 		}
 	}

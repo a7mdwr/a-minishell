@@ -6,7 +6,7 @@
 /*   By: aradwan <aradwan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/05 12:08:42 by aradwan           #+#    #+#             */
-/*   Updated: 2025/09/06 14:22:36 by aradwan          ###   ########.fr       */
+/*   Updated: 2025/09/06 15:42:29 by aradwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,3 +149,5 @@ void	remove_substr(char *s, unsigned int start, size_t len)
 	}
 	s[j] = '\0';
 }
+
+// echo "'jsdnbjkdsnbkjsnkjs'"

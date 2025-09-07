@@ -89,7 +89,7 @@ int		num_of_redirects(char *str);
 void	remove_substr(char *s, unsigned int start, size_t len);
 void	free_all(t_shell *pipe, t_cmds *cmd);
 void	free_strings(char **av);
-//            utils.c            \\.
+//            utils             \\.
 int     spaces(char *str);
 int     is_spacee(int c);
 

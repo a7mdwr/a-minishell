@@ -6,7 +6,7 @@
 /*   By: aradwan <aradwan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/05 17:36:21 by aradwan           #+#    #+#             */
-/*   Updated: 2025/09/07 19:08:10 by aradwan          ###   ########.fr       */
+/*   Updated: 2025/09/08 19:11:35 by aradwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,27 +36,28 @@ void	store_the_file_name(char *str, char **file_name, int i, t_variables *var)
 	(*file_name) = ft_substr(str, start, i - start);
 }
 
-void	files_fillings(t_shell *pipe, t_cmds *cmds, t_variables *var)
+
+void	files_fillings(t_shell *pipe, t_cmds *cmds, t_variables *v)
 {
-	var->start = var->char_i - 1;
-	if (pipe->cmds[var->cmd_i][var->char_i + 1] == '>' \
-		|| pipe->cmds[var->cmd_i][var->char_i + 1] == '<')
+	v->start = v->char_i - 1;
+	if (pipe->cmds[v->cmd_i][v->char_i + 1] == '>' \
+		|| pipe->cmds[v->cmd_i][v->char_i + 1] == '<')
 	{
-		if (pipe->cmds[var->cmd_i][var->char_i + 1] == '>')
-			cmds[var->cmd_i].outs[var->xy].flag = APPEND;
-		else if (pipe->cmds[var->cmd_i][var->char_i + 1] == '<')
-			cmds[var->cmd_i].outs[var->xy].flag = HERE_DOC;
-		var->char_i = var->char_i + 2;
+		if (pipe->cmds[v->cmd_i][v->char_i + 1] == '>')
+			cmds[v->cmd_i].outs[v->xy].flag = APPEND;
+		else if (pipe->cmds[v->cmd_i][v->char_i + 1] == '<')
+			cmds[v->cmd_i].outs[v->xy].flag = HERE_DOC;
+		v->char_i = v->char_i + 2;
 	}
-	else if (pipe->cmds[var->cmd_i][var->char_i] == '>')
+	else if (pipe->cmds[v->cmd_i][v->char_i] == '>')
 	{
-		cmds[var->cmd_i].outs[var->xy].flag = OUT_FILE;
-		var->char_i++;
+		cmds[v->cmd_i].outs[v->xy].flag = OUT_FILE;
+		v->char_i++;
 	}
-	else if (pipe->cmds[var->cmd_i][var->char_i] == '<')
+	else if (pipe->cmds[v->cmd_i][v->char_i] == '<')
 	{
-		cmds[var->cmd_i].outs[var->xy].flag = IN_FILE;
-		var->char_i++;
+		cmds[v->cmd_i].outs[v->xy].flag = IN_FILE;
+		v->char_i++;
 	}
 }
 

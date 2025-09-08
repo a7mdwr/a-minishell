@@ -28,7 +28,7 @@ char	*my_getenv(const char *name, t_shell *pipe)
 	while (env != NULL)
 	{
 		key = (char *) env->content;
-		if (strncmp(key, name, name_len) == 0 && key[name_len] == '=')
+		if (ft_strncmp(key, name, name_len) == 0 && key[name_len] == '=')
 		{
 			value = key + name_len + 1;
 			break ;

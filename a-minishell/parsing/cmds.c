@@ -6,13 +6,13 @@
 /*   By: aradwan <aradwan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/05 17:36:21 by aradwan           #+#    #+#             */
-/*   Updated: 2025/09/08 19:11:35 by aradwan          ###   ########.fr       */
+/*   Updated: 2025/09/08 19:12:11 by aradwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	store_the_file_name(char *str, char **file_name, int i, t_variables *var)
+void	store_the_file_name(char *str, char **file_name, int i, t_variables *v)
 {
 	int	start;
 	int	in_quote;
@@ -32,7 +32,7 @@ void	store_the_file_name(char *str, char **file_name, int i, t_variables *var)
 			break ;
 		i++;
 	}
-	var->i = i;
+	v->i = i;
 	(*file_name) = ft_substr(str, start, i - start);
 }
 

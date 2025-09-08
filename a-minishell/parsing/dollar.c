@@ -6,7 +6,7 @@
 /*   By: aradwan <aradwan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/05 17:23:19 by aradwan           #+#    #+#             */
-/*   Updated: 2025/09/06 16:07:17 by aradwan          ###   ########.fr       */
+/*   Updated: 2025/09/08 19:14:16 by aradwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,43 +41,43 @@ char	*storing(char *str, int start, int len, char *replace)
 	return (new_str);
 }
 
-void	quotes_check(char **str, t_variables *var)
+void	quotes_check(char **str, t_variables *v)
 {
-	if ((*str)[var->i] == '\"')
+	if ((*str)[v->i] == '\"')
 	{
-		if (!var->in_d_quotes)
-			var->in_d_quotes = 1;
-		else if (var->in_d_quotes)
-			var->in_d_quotes = 0;
+		if (!v->in_d_quotes)
+			v->in_d_quotes = 1;
+		else if (v->in_d_quotes)
+			v->in_d_quotes = 0;
 	}
-	if ((*str)[var->i] == '\'' && !var->in_d_quotes)
+	if ((*str)[v->i] == '\'' && !v->in_d_quotes)
 	{
-		if (!var->in_quotes)
-			var->in_quotes = 1;
-		else if (var->in_quotes)
-			var->in_quotes = 0;
+		if (!v->in_quotes)
+			v->in_quotes = 1;
+		else if (v->in_quotes)
+			v->in_quotes = 0;
 	}
 }
 
-int	expand(char **str, char *expanded, t_variables *var)
+int	expand(char **str, char *expanded, t_variables *v)
 {
 	expanded = NULL;
-	var->i++;
-	if ((*str)[var->i] == '?' && var->i == 1 && (*str)[var->i - 1] == '$')
+	v->i++;
+	if ((*str)[v->i] == '?' && v->i == 1 && (*str)[v->i - 1] == '$')
 	{
 		expanded = ft_itoa(exit_code);
-		*str = storing(*str, var->i - 1, 2, expanded);
-		var->i += ft_strlen(expanded) - 2;
+		*str = storing(*str, v->i - 1, 2, expanded);
+		v->i += ft_strlen(expanded) - 2;
 		free(expanded);
 		return (1);
 	}
-	if (!ft_isalpha((*str)[var->i]) && (*str)[var->i] != '_')
+	if (!ft_isalpha((*str)[v->i]) && (*str)[v->i] != '_')
 		return (1);
-	var->len = 0;
-	while (ft_isalnum((*str)[var->i]) || (*str)[var->i] == '_')
+	v->len = 0;
+	while (ft_isalnum((*str)[v->i]) || (*str)[v->i] == '_')
 	{
-		var->len++;
-		var->i++;
+		v->len++;
+		v->i++;
 	}
 	return (0);
 }

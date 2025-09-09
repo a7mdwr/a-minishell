@@ -1,0 +1,19 @@
+{
+    "files.associations": {
+        "sstream": "c",
+        "__hash_table": "c",
+        "__node_handle": "c",
+        "__split_buffer": "c",
+        "algorithm": "c",
+        "array": "c",
+        "functional": "c",
+        "iterator": "c",
+        "locale": "c",
+        "memory": "c",
+        "string": "c",
+        "string_view": "c",
+        "tuple": "c",
+        "unordered_map": "c",
+        "vector": "c"
+    }
+}

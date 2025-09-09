@@ -52,13 +52,12 @@ typedef struct s_cmds
 	t_redirect	*outs;
 }	t_cmds;
 
-typedef struct s_varibles
+typedef struct s_variables
 {
     int	i;
 	int indx;
 	int	cmd_i;
 	int	arg_i;
-	int	empty;
 	int	space_found;
 	int	quote_char;
 	int	char_i;
@@ -106,5 +105,8 @@ int	    handle_pipes(t_shell *pipe, char *input, t_cmds *cmds);
 
 //             cmds              \\.
 void	init_commands(t_shell *pipe, t_cmds **tmp);
+
+void	rl_replace_line(const char *text, int clear_undo);
+void	rl_redisplay(void);
 
 #endif

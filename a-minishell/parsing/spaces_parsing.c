@@ -6,30 +6,30 @@
 /*   By: aradwan <aradwan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/05 14:31:19 by aradwan           #+#    #+#             */
-/*   Updated: 2025/09/05 16:14:59 by aradwan          ###   ########.fr       */
+/*   Updated: 2025/09/09 11:40:55 by aradwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-static void	add_space(int *j, char **new_str, int var)
+static void	add_space(int *j, char **new_str, int type)
 {
 	(*new_str)[(*j)++] = ' ';
-	if (var == 0)
+	if (type == 0)
 		(*new_str)[(*j)++] = '<';
-	else if (var == 1)
+	else if (type == 1)
 	{
 		(*new_str)[(*j)++] = '<';
 		(*new_str)[(*j)++] = '<';
 	}
-	else if (var == 2)
+	else if (type == 2)
 		(*new_str)[(*j)++] = '>';
-	else if (var == 3)
+	else if (type == 3)
 	{
 		(*new_str)[(*j)++] = '>';
 		(*new_str)[(*j)++] = '>';
 	}
-	else if (var == 4)
+	else if (type == 4)
 		(*new_str)[(*j)++] = ' ';
 	(*new_str)[(*j)++] = ' ';
 }

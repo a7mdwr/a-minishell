@@ -6,12 +6,11 @@
 /*   By: aradwan <aradwan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/05 13:13:19 by aradwan           #+#    #+#             */
-/*   Updated: 2025/09/05 16:22:35 by aradwan          ###   ########.fr       */
+/*   Updated: 2025/09/09 13:34:07 by aradwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
 
 static int pipe_from_back(char *input)
 {

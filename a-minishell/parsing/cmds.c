@@ -6,7 +6,7 @@
 /*   By: aradwan <aradwan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/05 17:36:21 by aradwan           #+#    #+#             */
-/*   Updated: 2025/09/09 10:59:52 by aradwan          ###   ########.fr       */
+/*   Updated: 2025/09/10 18:41:22 by aradwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,4 +113,3 @@ void	init_commands(t_shell *pipe, t_cmds **tmp)
 			clean_quotes(cmds[v.cmd_i].cmds[v.arg_i++]);
 	}
 }
-

@@ -6,7 +6,7 @@
 /*   By: aradwan <aradwan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/05 17:23:19 by aradwan           #+#    #+#             */
-/*   Updated: 2025/09/08 19:16:05 by aradwan          ###   ########.fr       */
+/*   Updated: 2025/09/11 09:41:16 by aradwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ int	expand(char **str, char *expanded, t_variables *v)
 	v->i++;
 	if ((*str)[v->i] == '?' && v->i == 1 && (*str)[v->i - 1] == '$')
 	{
-		expanded = ft_itoa(exit_code);
+		expanded = ft_itoa(g_exit_code);
 		*str = storing(*str, v->i - 1, 2, expanded);
 		v->i += ft_strlen(expanded) - 2;
 		free(expanded);

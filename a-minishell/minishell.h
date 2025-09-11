@@ -28,7 +28,7 @@
 #include <readline/readline.h>
 #include <readline/history.h>
 
-extern int exit_code;
+extern int g_exit_code;
 
 enum e_types
 {
@@ -74,7 +74,7 @@ typedef struct s_shell
     int     num_cmd;
     t_list  *environment;
     int     environment_num;
-    char    **cmds;
+    char   	**cmds;
 } t_shell;
 
 //           environment              \\.          

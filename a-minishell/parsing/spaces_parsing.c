@@ -6,7 +6,7 @@
 /*   By: aradwan <aradwan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/05 14:31:19 by aradwan           #+#    #+#             */
-/*   Updated: 2025/09/09 11:40:55 by aradwan          ###   ########.fr       */
+/*   Updated: 2025/09/11 09:41:01 by aradwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,24 +36,29 @@ static void	add_space(int *j, char **new_str, int type)
 
 static void	add_spaces_helper(char **input, int *i, int *j, char **new_input)
 {
-	if ((*input)[*i] == '<' && (*input)[*i + 1] != '<')
+	char c;
+	char next;
+
+	c = (*input)[*i];
+	next = (*input)[*i + 1];
+	if (c == '<' && next != '<')
 		add_space(j, new_input, 0);
-	else if ((*input)[*i] == '<' && (*input)[*i + 1] == '<')
+	else if (c == '<' && next == '<')
 	{
 		(*i)++;
 		add_space(j, new_input, 1);
 	}
-	else if ((*input)[*i] == '>' && (*input)[*i + 1] != '>')
+	else if (c == '>' && c != '>')
 		add_space(j, new_input, 2);
-	else if ((*input)[*i] == '>' && (*input)[*i + 1] == '>')
+	else if (c == '>' && c == '>')
 	{
 		(*i)++;
 		add_space(j, new_input, 3);
 	}
-	else if ((*input)[*i] == '\t')
+	else if (c == '\t')
 		add_space(j, new_input, 4);
 	else
-		(*new_input)[(*j)++] = (*input)[(*i)];
+		(*new_input)[(*j)++] = c;
 }
 
 char	*ft_add_spaces(char *input)

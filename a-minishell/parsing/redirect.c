@@ -6,7 +6,7 @@
 /*   By: aradwan <aradwan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/05 12:35:26 by aradwan           #+#    #+#             */
-/*   Updated: 2025/09/06 14:23:12 by aradwan          ###   ########.fr       */
+/*   Updated: 2025/09/11 10:35:22 by aradwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,21 +53,18 @@ static int check_last(char *input)
 
 static int handle_redirections(char **input, t_variables *v)
 {
-    if(!check_last(*input))
+	char *str;
+
+	str = *input;
+    if(!check_last(str))
         return (0);
     v->i = 0;
-	while ((*input)[v->i])
+	while (str[v->i])
 	{
-		if ((*input)[v->i] == '\'' || \
-			(*input)[v->i] == '\"')
-		{
-			if (!v->in_quotes)
-				v->in_quotes = (*input)[v->i];
-			else if (v->in_quotes == (*input)[v->i])
-				v->in_quotes = 0;
-		}
+		quotes_check(&str, v);
 		if (!is_redirect(input, v))
 			return (0);
+		v->i++;
 	}
 	return (1);
 }

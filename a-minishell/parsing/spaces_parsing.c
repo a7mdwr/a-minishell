@@ -6,7 +6,7 @@
 /*   By: aradwan <aradwan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/05 14:31:19 by aradwan           #+#    #+#             */
-/*   Updated: 2025/09/11 09:41:01 by aradwan          ###   ########.fr       */
+/*   Updated: 2025/09/13 17:13:46 by aradwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ static void	add_spaces_helper(char **input, int *i, int *j, char **new_input)
 	}
 	else if (c == '>' && c != '>')
 		add_space(j, new_input, 2);
-	else if (c == '>' && c == '>')
+	else if (c == '>' && next == '>')
 	{
 		(*i)++;
 		add_space(j, new_input, 3);
@@ -66,21 +66,19 @@ char	*ft_add_spaces(char *input)
 	char	*new_input;
 	int		i;
 	int		j;
-	int		single_q;
-	int		double_q;
+	t_variables v;
 
 	i = -1;
 	j = 0;
-	single_q = 0;
-	double_q = 0;
+	v.i = 0;
+	v.in_quotes = 0;
+	v.in_d_quotes = 0;
 	new_input = malloc(ft_strlen(input) * 3 + 2);
 	while (input[++i])
 	{
-		if (input[i] == '\'' && double_q == 0)
-			single_q = !single_q;
-		else if (input[i] == '\"' && single_q == 0)
-			double_q = !double_q;
-		if (!single_q && !double_q)
+		v.i = i;
+		quotes_check(&input, &v);
+		if (!v.in_quotes && !v.in_d_quotes)
 			add_spaces_helper(&input, &i, &j, &new_input);
 		else
 			new_input[j++] = input[i];

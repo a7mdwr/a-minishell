@@ -6,7 +6,7 @@
 /*   By: aradwan <aradwan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/05 17:36:21 by aradwan           #+#    #+#             */
-/*   Updated: 2025/09/10 18:41:22 by aradwan          ###   ########.fr       */
+/*   Updated: 2025/09/13 17:25:32 by aradwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,27 +15,23 @@
 void	store_the_file_name(char *str, char **file_name, int i, t_variables *v)
 {
 	int	start;
-	int	in_quote;
+	t_variables qv;
 
 	start = i;
-	in_quote = 0;
+	qv.i = i;
+	qv.in_quotes = 0;
+	qv.in_d_quotes = 0;
 	while (str[i])
 	{
-		if (str[i] == '\'' || str[i] == '\"')
-		{
-			if (!in_quote)
-				in_quote = str[i];
-			else if (in_quote == str[i])
-				in_quote = 0;
-		}
-		if ((str[i] == ' ' || str[i] == '\t') && !in_quote)
+		qv.i = i;
+		quotes_check(&str, &qv);
+		if ((str[i] == ' ' || str[i] == '\t') && !qv.in_quotes && !qv.in_d_quotes)
 			break ;
 		i++;
 	}
 	v->i = i;
 	(*file_name) = ft_substr(str, start, i - start);
 }
-
 
 void	files_fillings(t_shell *pipe, t_cmds *cmds, t_variables *v)
 {
@@ -67,13 +63,7 @@ void	utils_saving(t_shell *pipe, t_cmds *cmds, t_variables *v)
 	v->char_i = -1;
 	while (pipe->cmds[v->cmd_i][++v->char_i])
 	{
-		if (pipe->cmds[v->cmd_i][v->char_i] == '"' || pipe->cmds[v->cmd_i][v->char_i] == '\'')
-		{
-			if (v->quote_char == 0)
-				v->quote_char = pipe->cmds[v->cmd_i][v->char_i];
-			else if (v->quote_char == pipe->cmds[v->cmd_i][v->char_i])
-				v->quote_char = 0;
-		}
+		quotes_check(&pipe->cmds[v->cmd_i], v);
 		if ((pipe->cmds[v->cmd_i][v->char_i] == '>' || \
 			pipe->cmds[v->cmd_i][v->char_i] == '<') && !v->quote_char)
 		{
@@ -83,6 +73,8 @@ void	utils_saving(t_shell *pipe, t_cmds *cmds, t_variables *v)
 			clean_quotes(cmds[v->cmd_i].outs[v->xy].file_name);
 			remove_substr(pipe->cmds[v->cmd_i], v->start, v->i);
 			v->char_i = v->start - 1;
+			printf("file name : %s\n", cmds[v->cmd_i].outs[v->xy].file_name);
+			printf("flag	  : %d\n", cmds[v->cmd_i].outs[v->xy].flag);
 			v->xy++;
 		}
 	}
@@ -111,5 +103,8 @@ void	init_commands(t_shell *pipe, t_cmds **tmp)
 		v.arg_i = 0;
 		while (cmds[v.cmd_i].cmds[v.arg_i])
 			clean_quotes(cmds[v.cmd_i].cmds[v.arg_i++]);
+		v.arg_i = 0;
+		while (cmds[v.cmd_i].cmds[v.arg_i])
+			puts(cmds[v.cmd_i].cmds[v.arg_i++]);
 	}
 }

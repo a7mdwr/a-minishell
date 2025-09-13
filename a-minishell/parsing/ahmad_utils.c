@@ -6,7 +6,7 @@
 /*   By: aradwan <aradwan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/05 12:08:42 by aradwan           #+#    #+#             */
-/*   Updated: 2025/09/08 18:59:26 by aradwan          ###   ########.fr       */
+/*   Updated: 2025/09/11 10:32:43 by aradwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,16 +57,8 @@ void	replace_spaces_tabs(char *str)
 	v.quote_char = 0;
 	while (str[v.i] != '\0')
 	{
-		if (str[v.i] == '"' || str[v.i] == '\'')
-		{
-			if (v.quote_char == 0)
-				v.quote_char = str[v.i];
-			else if (v.quote_char == str[v.i])
-				v.quote_char = 0;
-			v.space_found = 0;
-			str[v.indx++] = str[v.i];
-		}
-		else if (v.quote_char == 0)
+		quotes_check(&str, &v);
+		if (v.quote_char == 0)
 			increment(str, &v);
 		else
 			str[v.indx++] = str[v.i];
@@ -79,25 +71,24 @@ void	clean_quotes(char *str)
 {
 	int	i;
 	int	j;
-	int	quote;
+	t_variables v;
 
 	j = 0;
 	i = 0;
-	quote = 0;
+	v.i = 0;
+	v.in_quotes = 0;
+	v.in_d_quotes = 0;
 	while (str[i])
 	{
-		if (str[i] == '\'' || str[i] == '\"')
+		quotes_check(&str, &v);
+		if ((str[i] == '\'' || str[i] == '\"') && !v.in_quotes && !v.in_d_quotes)
 		{
-			if (!quote)
-				quote = str[i];
-			else if (quote == str[i])
-				quote = 0;
-			else
-				str[j++] = str[i];
+			// skip quote
 		}
 		else
 			str[j++] = str[i];
 		i++;
+		v.i = i;
 	}
 	str[j] = '\0';
 }
@@ -106,27 +97,24 @@ int	num_of_redirects(char *str)
 {
 	int	i;
 	int	num;
-	int	in_quote;
+	t_variables v;
 
 	i = 0;
 	num = 0;
-	in_quote = 0;
+	v.i = 0;
+	v.in_quotes = 0;
+	v.in_d_quotes = 0;
 	while (str[i])
 	{
-		if (str[i] == '\'' || str[i] == '\"')
-		{
-			if (!in_quote)
-				in_quote = str[i];
-			else if (in_quote == str[i])
-				in_quote = 0;
-		}
-		else if (!in_quote && (str[i] == '>' || str[i] == '<'))
+		quotes_check(&str, &v);
+		if (!v.in_quotes && !v.in_d_quotes && (str[i] == '>' || str[i] == '<'))
 		{
 			if (str[i + 1] == '>' || str[i + 1] == '<')
 				i++;
 			num++;
 		}
 		i++;
+		v.i = i;
 	}
 	return (num);
 }

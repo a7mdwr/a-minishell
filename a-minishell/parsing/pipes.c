@@ -6,7 +6,7 @@
 /*   By: aradwan <aradwan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/05 13:13:19 by aradwan           #+#    #+#             */
-/*   Updated: 2025/09/09 13:34:07 by aradwan          ###   ########.fr       */
+/*   Updated: 2025/09/11 10:46:12 by aradwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,20 +33,16 @@ static int pipe_from_back(char *input)
 	return (0);
 }
 
-static int pipe_in_quotes(char *input, int i, int quotes, int j)
+static int pipe_in_quotes(char *input, int i, int j)
 {
+    t_variables v;
+    v.i = 0;
+    v.in_quotes = 0;
+    v.in_d_quotes = 0;
     while (input[i])
 	{
-		if (input[i] == '\"' || input[i] == '\'')
-		{
-			if (quotes == 0)
-				quotes = input[i];
-			else if (!quotes)
-				quotes = 0;
-			i++;
-			continue ;
-		}
-		if (input[i] == '|' && !quotes)
+		quotes_check(&input, &v);
+		if (input[i] == '|' && !v.in_quotes && !v.in_d_quotes)
 		{
 			j = i + 1;
 			while (input[j] == ' ' || input[j] == '\t')
@@ -55,31 +51,24 @@ static int pipe_in_quotes(char *input, int i, int quotes, int j)
 				return (0);
 		}
 		i++;
+		v.i = i;
 	}
 	return (1);
 }
 
-static int	check_input_helper(char *input, int in_quote, int in_dquote, int i)
+static int	check_input_helper(char *input, int i)
 {
+	t_variables v;
+	v.i = 0;
+	v.in_quotes = 0;
+	v.in_d_quotes = 0;
 	while (input[i])
 	{
-		if (input[i] == '\'')
-		{
-			if (in_quote)
-				in_quote = 0;
-			else if (!in_dquote)
-				in_quote = 1;
-		}
-		else if (input[i] == '\"')
-		{
-			if (in_dquote)
-				in_dquote = 0;
-			else if (!in_quote)
-				in_dquote = 1;
-		}
+		quotes_check(&input, &v);
 		i++;
+		v.i = i;
 	}
-	if (in_quote || in_dquote)
+	if (v.in_quotes || v.in_d_quotes)
 		return (0);
 	return (1);
 }
@@ -87,13 +76,9 @@ static int	check_input_helper(char *input, int in_quote, int in_dquote, int i)
 static int	check_input(char *input)
 {
 	int	i;
-	int	in_quote;
-	int	in_d_quote;
 
 	i = 0;
-	in_quote = 0;
-	in_d_quote = 0;
-	if (!check_input_helper(input, in_quote, in_d_quote, i))
+	if (!check_input_helper(input, i))
 		return (0);
 	return (1);
 }
@@ -102,15 +87,13 @@ int	handle_pipes(t_shell *pipe, char *input, t_cmds *cmds)
 {
 	int	i;
 	int	j;
-	int	quotes;
 
 	(void)cmds;
-	quotes = 0;
 	i = 0;
 	j = 0;
 	if (pipe_from_back(input))
 		return (0);
-	if (!pipe_in_quotes(input, i, quotes, j))
+	if (!pipe_in_quotes(input, i, j))
 		return (0);
 	if (!check_input(input))
 		return (0);

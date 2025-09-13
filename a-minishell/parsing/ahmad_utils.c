@@ -6,7 +6,7 @@
 /*   By: aradwan <aradwan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/05 12:08:42 by aradwan           #+#    #+#             */
-/*   Updated: 2025/09/11 10:32:43 by aradwan          ###   ########.fr       */
+/*   Updated: 2025/09/13 21:10:28 by aradwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,24 +71,25 @@ void	clean_quotes(char *str)
 {
 	int	i;
 	int	j;
-	t_variables v;
+	int	quote;
 
 	j = 0;
 	i = 0;
-	v.i = 0;
-	v.in_quotes = 0;
-	v.in_d_quotes = 0;
+	quote = 0;
 	while (str[i])
 	{
-		quotes_check(&str, &v);
-		if ((str[i] == '\'' || str[i] == '\"') && !v.in_quotes && !v.in_d_quotes)
+		if (str[i] == '\'' || str[i] == '\"')
 		{
-			// skip quote
+			if (!quote)
+				quote = str[i];
+			else if (quote == str[i])
+				quote = 0;
+			else
+				str[j++] = str[i];
 		}
 		else
 			str[j++] = str[i];
 		i++;
-		v.i = i;
 	}
 	str[j] = '\0';
 }

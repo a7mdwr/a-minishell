@@ -6,41 +6,41 @@
 /*   By: aradwan <aradwan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/05 14:31:19 by aradwan           #+#    #+#             */
-/*   Updated: 2025/09/13 18:44:06 by aradwan          ###   ########.fr       */
+/*   Updated: 2025/09/13 20:58:45 by aradwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-static void	add_space(int *j, char *new_str, int type)
+static void	add_space(int *j, char **new_str, int type)
 {
-	new_str[(*j)++] = ' ';
+	(*new_str)[(*j)++] = ' ';
 	if (type == 0)
-		new_str[(*j)++] = '<';
+		(*new_str)[(*j)++] = '<';
 	else if (type == 1)
 	{
-		new_str[(*j)++] = '<';
-		new_str[(*j)++] = '<';
+		(*new_str)[(*j)++] = '<';
+		(*new_str)[(*j)++] = '<';
 	}
 	else if (type == 2)
-		new_str[(*j)++] = '>';
+		(*new_str)[(*j)++] = '>';
 	else if (type == 3)
 	{
-		new_str[(*j)++] = '>';
-		new_str[(*j)++] = '>';
+		(*new_str)[(*j)++] = '>';
+		(*new_str)[(*j)++] = '>';
 	}
 	else if (type == 4)
-		new_str[(*j)++] = ' ';
-	new_str[(*j)++] = ' ';
+		(*new_str)[(*j)++] = ' ';
+	(*new_str)[(*j)++] = ' ';
 }
 
-static void	add_spaces_helper(char *input, int *i, int *j, char *new_input)
+static void	add_spaces_helper(char **input, int *i, int *j, char **new_input)
 {
 	char c;
 	char next;
 
-	c = input[*i];
-	next = input[*i + 1];
+	c = (*input)[*i];
+	next = (*input)[*i + 1];
 	if (c == '<' && next != '<')
 		add_space(j, new_input, 0);
 	else if (c == '<' && next == '<')
@@ -58,7 +58,7 @@ static void	add_spaces_helper(char *input, int *i, int *j, char *new_input)
 	else if (c == '\t')
 		add_space(j, new_input, 4);
 	else
-		new_input[(*j)++] = c;
+		(*new_input)[(*j)++] = c;
 }
 
 char	*ft_add_spaces(char *input)
@@ -66,22 +66,22 @@ char	*ft_add_spaces(char *input)
 	char	*new_input;
 	int		i;
 	int		j;
-	t_variables v;
+	int		single_q;
+	int		double_q;
 
 	i = -1;
 	j = 0;
-	v.i = 0;
-	v.in_quotes = 0;
-	v.in_d_quotes = 0;
+	single_q = 0;
+	double_q = 0;
 	new_input = malloc(ft_strlen(input) * 3 + 2);
-	if (!new_input)
-		return (NULL);
 	while (input[++i])
 	{
-		v.i = i;
-		quotes_check(&input, &v);
-		if (!v.in_quotes && !v.in_d_quotes)
-			add_spaces_helper(input, &i, &j, new_input);
+		if (input[i] == '\'' && double_q == 0)
+			single_q = !single_q;
+		else if (input[i] == '\"' && single_q == 0)
+			double_q = !double_q;
+		if (!single_q && !double_q)
+			add_spaces_helper(&input, &i, &j, &new_input);
 		else
 			new_input[j++] = input[i];
 	}

@@ -14,6 +14,7 @@
         "string_view": "c",
         "tuple": "c",
         "unordered_map": "c",
-        "vector": "c"
+        "vector": "c",
+        "minishell.h": "c"
     }
 }

@@ -6,7 +6,7 @@
 /*   By: aradwan <aradwan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/05 14:31:19 by aradwan           #+#    #+#             */
-/*   Updated: 2025/09/13 17:58:53 by aradwan          ###   ########.fr       */
+/*   Updated: 2025/09/13 18:44:06 by aradwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,8 @@ char	*ft_add_spaces(char *input)
 	v.in_quotes = 0;
 	v.in_d_quotes = 0;
 	new_input = malloc(ft_strlen(input) * 3 + 2);
+	if (!new_input)
+		return (NULL);
 	while (input[++i])
 	{
 		v.i = i;

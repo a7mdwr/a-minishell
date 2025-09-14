@@ -4,7 +4,7 @@ SRCS =	minishell.c parsing/signals.c  parsing/utils.c  parsing/parser.c parsing/
 OBJS = $(SRCS:.c=.o)
 CC = cc
 
-CFLAGS = -Wall -Wextra -Werror -g
+CFLAGS = -Wall -Wextra -Werror -g -fsanitize=address
 
 all : $(NAME)
 

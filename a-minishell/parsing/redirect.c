@@ -6,7 +6,7 @@
 /*   By: aradwan <aradwan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/05 12:35:26 by aradwan           #+#    #+#             */
-/*   Updated: 2025/09/14 14:58:35 by aradwan          ###   ########.fr       */
+/*   Updated: 2025/09/14 18:10:06 by aradwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ int	redirections_parse(char *str)
 	t_variables	v;
 
 	v.i = 0;
-	v.indx = 0;
+	v.j = 0;
 	v.in_d_quotes = 0;
 	v.in_quotes = 0;
 	if (!handle_redirections(&str, &v))

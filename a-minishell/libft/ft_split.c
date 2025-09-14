@@ -107,12 +107,3 @@ char	**ft_split(char const *s, char c)
 	split[i] = NULL;
 	return (split);
 }
-
-// int main()
-// {
-//     char **str;
-//     str = ft_split(",,,,,,,,,dsmffmsfmsfk,fsfs,f,,fsfsffffs,,,,,,,,", ',');
-//     int i = 0;
-//     while (str[i] != NULL)
-//         printf("%s\n", str[i++]);
-// }

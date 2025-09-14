@@ -2,9 +2,12 @@
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: aradwan <aradwan@student.42.fr>            +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
+/*                                                    +:+ +:+        
+	+:+     */
+/*   By: aradwan <aradwan@student.42.fr>            +#+  +:+      
+	+#+        */
+/*                                                +#+#+#+#+#+  
+	+#+           */
 /*   Created: 2025/06/24 16:18:39 by aradwan           #+#    #+#             */
 /*   Updated: 2025/08/15 20:16:07 by aradwan          ###   ########.fr       */
 /*                                                                            */
@@ -13,22 +16,22 @@
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-# include <pthread.h>
-# include <unistd.h>
-# include <stdio.h>
 # include "libft/libft.h"
-# include <time.h>
-# include <sys/time.h>
-# include <string.h>
-# include <limits.h>
-# include <stdlib.h> 
-# include <stdbool.h>
-# include <signal.h>
 # include <errno.h>
-#include <readline/readline.h>
-#include <readline/history.h>
+# include <limits.h>
+# include <pthread.h>
+# include <readline/history.h>
+# include <readline/readline.h>
+# include <signal.h>
+# include <stdbool.h>
+# include <stdio.h>
+# include <stdlib.h>
+# include <string.h>
+# include <sys/time.h>
+# include <time.h>
+# include <unistd.h>
 
-extern int g_exit_code;
+extern int	g_exit_code;
 
 enum e_types
 {
@@ -54,8 +57,8 @@ typedef struct s_cmds
 
 typedef struct s_variables
 {
-    int	i;
-	int indx;
+	int	i;
+	int	indx;
 	int	cmd_i;
 	int	arg_i;
 	int	space_found;
@@ -66,42 +69,41 @@ typedef struct s_variables
 	int	xy;
 	int	in_d_quotes;
 	int	in_quotes;
-} t_variables;
+}	t_variables;
 
 typedef struct s_shell
 {
-    int     cmd_len;
-    int     num_cmd;
-    t_list  *environment;
-    int     environment_num;
-    char   	**cmds;
-} t_shell;
+	int		cmd_len;
+	int		num_cmd;
+	t_list	*environment;
+	int		environment_num;
+	char	**cmds;
+}	t_shell;
 
-//           environment              \\.          
+//           environment              \\.
 int		parsing(t_shell *pipe, t_cmds *cmds, char *input);
-void    copy_env(t_shell *s, char **env);
+void	copy_env(t_shell *s, char **env);
 char	*ft_add_spaces(char *input);
 void	replace_spaces_tabs(char *str);
 char	*my_getenv(const char *name, t_shell *pipe);
 void	clean_quotes(char *str);
 
-
 //            utils             \\.
-int     spaces(char *str);
-int     is_spacee(int c);
+int		spaces(char *str);
+int		is_spacee(int c);
 void	free_all(t_shell *pipe, t_cmds *cmd);
 void	free_strings(char **av);
 void	remove_substr(char *s, unsigned int start, size_t len);
 
 //            signals            \\.
-void    handle_signals(int signal);
+void	handle_signals(int signal);
 
 //            redirect           \\.
-int     redirections_parse(char *str);
+int		redirections_parse(char *str);
 int		num_of_redirects(char *str);
 
 //             pipes             \\.
-int	    handle_pipes(t_shell *pipe, char *input, t_cmds *cmds);
+int		handle_pipes(t_shell *pipe, char *input, t_cmds *cmds);
 
 //             cmds              \\.
 void	init_commands(t_shell *pipe, t_cmds **tmp);

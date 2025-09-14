@@ -1,6 +1,6 @@
 NAME = minishell
-SRCS =	minishell.c parsing/signals.c  parsing/ahmad_utils.c  parsing/parser.c parsing/redirect.c  parsing/spaces_parsing.c \
- parsing/env.c  free_all.c  parsing/pipes.c parsing/dollar.c parsing/cmds.c
+SRCS =	minishell.c parsing/signals.c  parsing/utils.c  parsing/parser.c parsing/redirect.c  parsing/spaces_parsing.c \
+ parsing/env.c  free_all.c  parsing/pipes.c parsing/dollar.c parsing/cmds.c parsing/utils2.c
 OBJS = $(SRCS:.c=.o)
 CC = cc
 

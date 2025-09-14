@@ -38,7 +38,9 @@ void	*ft_memcpy(void *dest, const void *src, size_t n)
 // #include <string.h>
 // int	main(void)
 // {
-// 	char buf[10] = "abcdef";
-// 	ft_memcpy(buf + 1, buf, 5); // UB, should not be safe!
-// 	printf("memcpy overlap result: %s\n", buf);
+// 	char s[] = "ahmad";
+// 	char d[100] = "l";
+
+// 	ft_memcpy(d, s, 3);
+// 	printf("%s\n", d);
 // }

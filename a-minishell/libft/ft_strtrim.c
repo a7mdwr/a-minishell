@@ -40,10 +40,10 @@ char	*ft_strtrim(char const *s1, char const *set)
 	return (str);
 }
 
-#include <stdio.h>
-int main()
-{
-    char *str = ft_strtrim(" yuyuyuyl  ahmlad  ll", " lyu");
-    printf("%s\n", str);
-    free (str);
-}
+// #include <stdio.h>
+// int main()
+// {
+//     char *str = ft_strtrim(" l  ahmlad  ll", NULL);
+//     printf("%s\n", str);
+//     free (str);
+// }

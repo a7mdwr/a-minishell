@@ -6,7 +6,7 @@
 /*   By: aradwan <aradwan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/05 17:23:19 by aradwan           #+#    #+#             */
-/*   Updated: 2025/09/11 09:41:16 by aradwan          ###   ########.fr       */
+/*   Updated: 2025/09/14 14:53:19 by aradwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ char	*storing(char *str, int start, int len, char *replace)
 	if (!str || start + len > (int)ft_strlen(str))
 		return (NULL);
 	new_str = malloc(sizeof(char) * \
-		(ft_strlen(str) - len + ft_strlen(replace) + 1));
+(ft_strlen(str) - len + ft_strlen(replace) + 1));
 	if (!new_str)
 		return (NULL);
 	i = 0;
@@ -39,24 +39,6 @@ char	*storing(char *str, int start, int len, char *replace)
 	new_str[j] = '\0';
 	free(str);
 	return (new_str);
-}
-
-void	quotes_check(char **str, t_variables *v)
-{
-	if ((*str)[v->i] == '\"')
-	{
-		if (!v->in_d_quotes)
-			v->in_d_quotes = 1;
-		else if (v->in_d_quotes)
-			v->in_d_quotes = 0;
-	}
-	if ((*str)[v->i] == '\'' && !v->in_d_quotes)
-	{
-		if (!v->in_quotes)
-			v->in_quotes = 1;
-		else if (v->in_quotes)
-			v->in_quotes = 0;
-	}
 }
 
 int	expand(char **str, char *expanded, t_variables *v)
@@ -129,8 +111,8 @@ int	generate_string(char **str, char **tmp, t_variables *v, t_shell *pipe)
 void	dollar_expansion(char **str, t_shell *pipe)
 {
 	t_variables	v;
-	char	*tmp;
-	char	*expanded;
+	char		*tmp;
+	char		*expanded;
 
 	v.len = 0;
 	expanded = NULL;

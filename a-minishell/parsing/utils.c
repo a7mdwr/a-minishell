@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ahmad_utils.c                                      :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aradwan <aradwan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/05 12:08:42 by aradwan           #+#    #+#             */
-/*   Updated: 2025/09/13 21:10:28 by aradwan          ###   ########.fr       */
+/*   Updated: 2025/09/14 14:59:05 by aradwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int spaces(char *str)
+int	spaces(char *str)
 {
 	int	i;
 
@@ -24,11 +24,10 @@ int spaces(char *str)
 	return (0);
 }
 
-int is_spacee(int c)
+int	is_spacee(int c)
 {
-    return (c == ' ' || c == '\t' || c == '\n');
+	return (c == ' ' || c == '\t' || c == '\n');
 }
-
 
 static void	increment(char *str, t_variables *v)
 {
@@ -92,49 +91,4 @@ void	clean_quotes(char *str)
 		i++;
 	}
 	str[j] = '\0';
-}
-
-int	num_of_redirects(char *str)
-{
-	int	i;
-	int	num;
-	t_variables v;
-
-	i = 0;
-	num = 0;
-	v.i = 0;
-	v.in_quotes = 0;
-	v.in_d_quotes = 0;
-	while (str[i])
-	{
-		quotes_check(&str, &v);
-		if (!v.in_quotes && !v.in_d_quotes && (str[i] == '>' || str[i] == '<'))
-		{
-			if (str[i + 1] == '>' || str[i + 1] == '<')
-				i++;
-			num++;
-		}
-		i++;
-		v.i = i;
-	}
-	return (num);
-}
-
-void	remove_substr(char *s, unsigned int start, size_t len)
-{
-	size_t	i;
-	size_t	j;
-
-	i = 0;
-	j = 0;
-	while (s[i])
-	{
-		if (i < start || i >= len)
-		{
-			s[j] = s[i];
-			j++;
-		}
-		i++;
-	}
-	s[j] = '\0';
 }

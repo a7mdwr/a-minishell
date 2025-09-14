@@ -6,7 +6,7 @@
 /*   By: aradwan <aradwan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/05 14:31:19 by aradwan           #+#    #+#             */
-/*   Updated: 2025/09/13 20:58:45 by aradwan          ###   ########.fr       */
+/*   Updated: 2025/09/14 14:58:48 by aradwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,8 @@ static void	add_space(int *j, char **new_str, int type)
 
 static void	add_spaces_helper(char **input, int *i, int *j, char **new_input)
 {
-	char c;
-	char next;
+	char	c;
+	char	next;
 
 	c = (*input)[*i];
 	next = (*input)[*i + 1];

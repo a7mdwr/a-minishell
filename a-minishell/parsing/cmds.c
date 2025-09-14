@@ -6,16 +6,35 @@
 /*   By: aradwan <aradwan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/05 17:36:21 by aradwan           #+#    #+#             */
-/*   Updated: 2025/09/13 17:25:32 by aradwan          ###   ########.fr       */
+/*   Updated: 2025/09/14 14:54:43 by aradwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
+void	remove_substr(char *s, unsigned int start, size_t len)
+{
+	size_t	i;
+	size_t	j;
+
+	i = 0;
+	j = 0;
+	while (s[i])
+	{
+		if (i < start || i >= len)
+		{
+			s[j] = s[i];
+			j++;
+		}
+		i++;
+	}
+	s[j] = '\0';
+}
+
 void	store_the_file_name(char *str, char **file_name, int i, t_variables *v)
 {
-	int	start;
-	t_variables qv;
+	int			start;
+	t_variables	qv;
 
 	start = i;
 	qv.i = i;
@@ -25,7 +44,8 @@ void	store_the_file_name(char *str, char **file_name, int i, t_variables *v)
 	{
 		qv.i = i;
 		quotes_check(&str, &qv);
-		if ((str[i] == ' ' || str[i] == '\t') && !qv.in_quotes && !qv.in_d_quotes)
+		if ((str[i] == ' ' || str[i] == '\t') && \
+!qv.in_quotes && !qv.in_d_quotes)
 			break ;
 		i++;
 	}
@@ -37,7 +57,7 @@ void	files_fillings(t_shell *pipe, t_cmds *cmds, t_variables *v)
 {
 	v->start = v->char_i - 1;
 	if (pipe->cmds[v->cmd_i][v->char_i + 1] == '>' \
-		|| pipe->cmds[v->cmd_i][v->char_i + 1] == '<')
+|| pipe->cmds[v->cmd_i][v->char_i + 1] == '<')
 	{
 		if (pipe->cmds[v->cmd_i][v->char_i + 1] == '>')
 			cmds[v->cmd_i].outs[v->xy].flag = APPEND;
@@ -65,11 +85,11 @@ void	utils_saving(t_shell *pipe, t_cmds *cmds, t_variables *v)
 	{
 		quotes_check(&pipe->cmds[v->cmd_i], v);
 		if ((pipe->cmds[v->cmd_i][v->char_i] == '>' || \
-			pipe->cmds[v->cmd_i][v->char_i] == '<') && !v->quote_char)
+pipe->cmds[v->cmd_i][v->char_i] == '<') && !v->quote_char)
 		{
 			files_fillings(pipe, cmds, v);
 			store_the_file_name(pipe->cmds[v->cmd_i], \
-				&cmds[v->cmd_i].outs[v->xy].file_name, v->char_i + 1, v);
+&cmds[v->cmd_i].outs[v->xy].file_name, v->char_i + 1, v);
 			clean_quotes(cmds[v->cmd_i].outs[v->xy].file_name);
 			remove_substr(pipe->cmds[v->cmd_i], v->start, v->i);
 			v->char_i = v->start - 1;
@@ -82,7 +102,7 @@ void	utils_saving(t_shell *pipe, t_cmds *cmds, t_variables *v)
 
 void	init_commands(t_shell *pipe, t_cmds **tmp)
 {
-	t_cmds	*cmds;
+	t_cmds		*cmds;
 	t_variables	v;
 
 	v.start = 0;
@@ -97,7 +117,8 @@ void	init_commands(t_shell *pipe, t_cmds **tmp)
 	{
 		cmds[v.cmd_i].red_len = num_of_redirects(pipe->cmds[v.cmd_i]);
 		if (cmds[v.cmd_i].red_len)
-			cmds[v.cmd_i].outs = malloc(sizeof(t_redirect) * cmds[v.cmd_i].red_len);
+			cmds[v.cmd_i].outs = malloc(sizeof(t_redirect) * \
+cmds[v.cmd_i].red_len);
 		utils_saving(pipe, cmds, &v);
 		cmds[v.cmd_i].cmds = ft_split(pipe->cmds[v.cmd_i], ' ');
 		v.arg_i = 0;

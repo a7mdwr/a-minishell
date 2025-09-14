@@ -6,15 +6,15 @@
 /*   By: aradwan <aradwan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/05 13:13:19 by aradwan           #+#    #+#             */
-/*   Updated: 2025/09/11 10:46:12 by aradwan          ###   ########.fr       */
+/*   Updated: 2025/09/14 14:57:00 by aradwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-static int pipe_from_back(char *input)
+static int	pipe_from_back(char *input)
 {
-    int	len;
+	int	len;
 	int	i;
 
 	len = ft_strlen(input);
@@ -33,13 +33,14 @@ static int pipe_from_back(char *input)
 	return (0);
 }
 
-static int pipe_in_quotes(char *input, int i, int j)
+static int	pipe_in_quotes(char *input, int i, int j)
 {
-    t_variables v;
-    v.i = 0;
-    v.in_quotes = 0;
-    v.in_d_quotes = 0;
-    while (input[i])
+	t_variables	v;
+
+	v.i = 0;
+	v.in_quotes = 0;
+	v.in_d_quotes = 0;
+	while (input[i])
 	{
 		quotes_check(&input, &v);
 		if (input[i] == '|' && !v.in_quotes && !v.in_d_quotes)
@@ -58,7 +59,8 @@ static int pipe_in_quotes(char *input, int i, int j)
 
 static int	check_input_helper(char *input, int i)
 {
-	t_variables v;
+	t_variables	v;
+
 	v.i = 0;
 	v.in_quotes = 0;
 	v.in_d_quotes = 0;

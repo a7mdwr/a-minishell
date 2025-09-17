@@ -58,7 +58,7 @@ typedef struct s_cmds
 typedef struct s_variables
 {
 	int	i;
-	int j;
+	int	j;
 	int	cmd_i;
 	int	arg_i;
 	int	space_found;

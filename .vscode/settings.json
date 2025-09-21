@@ -15,6 +15,7 @@
         "tuple": "c",
         "unordered_map": "c",
         "vector": "c",
-        "minishell.h": "c"
+        "minishell.h": "c",
+        "stdio.h": "c"
     }
 }

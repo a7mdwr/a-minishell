@@ -6,7 +6,7 @@
 /*   By: aradwan <aradwan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/21 14:08:56 by aradwan           #+#    #+#             */
-/*   Updated: 2025/09/21 14:09:09 by aradwan          ###   ########.fr       */
+/*   Updated: 2025/09/22 17:12:57 by aradwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,6 +123,7 @@ int	handle_pipes(t_shell *pipe, char *input, t_cmds *cmds)
 		pipe->cmds[i] = ft_add_spaces(pipe->cmds[i]);
 		replace_spaces_tabs(pipe->cmds[i]);
 		i++;
+		expand()
 	}
 	pipe->cmd_len = i;
 	return (1);
